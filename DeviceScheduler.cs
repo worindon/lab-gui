@@ -11,29 +11,23 @@ public class DeviceScheduler
         this.queue = Queue;
     }
 
-
-
-
     public void Session()
     {
-        
-           
-        
+
         if (!resource.IsFree())
         {
-            var activeProcess = resource.ActiveProcess;
-            activeProcess.IncreaseWorkTime();
 
-            if (activeProcess.WorkTime >= activeProcess.BurstTime)
+            if(resource.ActiveProcess?.BurstTime > resource.ActiveProcess?.WorkTime)
             {
-                activeProcess.Status = ProcessStatus.ready;
+                resource.ActiveProcess?.IncreaseWorkTime();
             }
+            else /*(resource.ActiveProcess?.WorkTime > resource.ActiveProcess?.BurstTime)*/
+            {
 
-            if (activeProcess.Status == ProcessStatus.ready)
-            {
-                Console.WriteLine($"Process {activeProcess.Id} finished on the device.");
-                resource.ActiveProcess = null;
+                resource.ActiveProcess.Status = ProcessStatus.terminated;
+                resource.ActiveProcess.OnResourceFreeing();
             }
+            
         }
         else if (queue.Count != 0)
         {
@@ -43,7 +37,6 @@ public class DeviceScheduler
                 process.Status = ProcessStatus.running;
                 process.ResetWorkTime();
                 resource.ActiveProcess = process;
-                Console.WriteLine($"Process {process.Id} started on the device.");
             }
         }
     }

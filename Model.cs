@@ -50,10 +50,10 @@ public class Model
     {
         clock.WorkingCycle();
         cpuScheduler.Execute();
-         cpu.WorkingCycle();      
+        cpu.WorkingCycle();      
         cpuScheduler.Session();
-                
-        deviceScheduler.Session(); 
+        deviceScheduler.Session();    
+        
 
         if (ShouldCreateProcess())
         {
@@ -129,11 +129,8 @@ public class Model
                 if (!ReadyQueue.UnorderedItems.Any(p => p.Element == proc))
                 {
                     ReadyQueue.Enqueue(proc, proc.Priority);
-                    Console.WriteLine($"Process {proc.Id} moved to ReadyQueue.");
                 }
-
-                
-               Subscribe(proc);
+                Subscribe(proc);
                 break;
 
             case ProcessStatus.waiting:
@@ -143,16 +140,22 @@ public class Model
 
                 if (!DeviceQueue.Contains(proc))
                 {
+                    proc.Status = ProcessStatus.ready;
                     DeviceQueue.Enqueue(proc);
-                    Console.WriteLine($"Process {proc.Id} moved to DeviceQueue.");
                 }
                 Subscribe(proc);            
                 break;
 
             case ProcessStatus.terminated:
                 if (cpu.ActiveProcess == proc)
+                {
                     memoryManager.Free(proc);
                     cpu.Clear();
+                }
+                if(proc == device.ActiveProcess)
+                {
+                    device.Clear();
+                }
                 break;
 
             default:

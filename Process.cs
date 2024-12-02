@@ -56,12 +56,17 @@ public Process(long id, long addrSpace)
 
     public override string ToString()
     {
-        return "Id: " + this.Id + " Burst time " + this.BurstTime + " Work time " + this.WorkTime + " Status " + this.Status + " Address space " + this.AddrSpace;
+        return "Id: " + this.Id +  " [" +          
+                this.Status + "]" +
+                " Pririty [" + this.Priority + "]" +
+               " AddrsSpace" + " [" + this.AddrSpace + "]" +
+               " Work time " + "[" +
+                this.WorkTime + "/" + this.BurstTime + "]";
     }
 
     public ProcessStatus randStatus()
     {
-        return procRand.Next(2) == 0 ? ProcessStatus.terminated : ProcessStatus.waiting;
+        return procRand.Next(10) < 4 ? ProcessStatus.terminated : ProcessStatus.waiting;
     }
 
     public void OnResourceFreeing()

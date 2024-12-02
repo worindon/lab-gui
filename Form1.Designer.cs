@@ -1,6 +1,6 @@
 ﻿namespace lab_gui
 {
-    partial class Form1
+    partial class GuiForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -86,17 +86,17 @@
             // 
             // timer1
             // 
-            timer1.Interval = 1000;
+            timer1.Interval = 500;
             timer1.Tick += timer1_Tick;
             // 
             // cpuQueueTextBox
             // 
             cpuQueueTextBox.BackColor = SystemColors.ControlLight;
             cpuQueueTextBox.ForeColor = SystemColors.Desktop;
-            cpuQueueTextBox.Location = new Point(28, 150);
+            cpuQueueTextBox.Location = new Point(3, 150);
             cpuQueueTextBox.Name = "cpuQueueTextBox";
             cpuQueueTextBox.ReadOnly = true;
-            cpuQueueTextBox.Size = new Size(392, 144);
+            cpuQueueTextBox.Size = new Size(417, 144);
             cpuQueueTextBox.TabIndex = 0;
             cpuQueueTextBox.Text = "";
             // 
@@ -136,7 +136,7 @@
             deviceQueueTextBox.Location = new Point(447, 150);
             deviceQueueTextBox.Name = "deviceQueueTextBox";
             deviceQueueTextBox.ReadOnly = true;
-            deviceQueueTextBox.Size = new Size(413, 144);
+            deviceQueueTextBox.Size = new Size(431, 144);
             deviceQueueTextBox.TabIndex = 6;
             deviceQueueTextBox.Text = "";
             // 
@@ -152,12 +152,12 @@
             // cpuActiveProcess
             // 
             cpuActiveProcess.ImeMode = ImeMode.NoControl;
-            cpuActiveProcess.Location = new Point(28, 34);
+            cpuActiveProcess.Location = new Point(3, 34);
             cpuActiveProcess.Multiline = true;
             cpuActiveProcess.Name = "cpuActiveProcess";
             cpuActiveProcess.ReadOnly = true;
             cpuActiveProcess.ShortcutsEnabled = false;
-            cpuActiveProcess.Size = new Size(392, 52);
+            cpuActiveProcess.Size = new Size(417, 52);
             cpuActiveProcess.TabIndex = 8;
             cpuActiveProcess.TextChanged += cpuActiveProcess_TextChanged;
             // 
@@ -168,7 +168,7 @@
             deviceActiveProcess.Name = "deviceActiveProcess";
             deviceActiveProcess.ReadOnly = true;
             deviceActiveProcess.ShortcutsEnabled = false;
-            deviceActiveProcess.Size = new Size(413, 52);
+            deviceActiveProcess.Size = new Size(431, 52);
             deviceActiveProcess.TabIndex = 9;
             // 
             // nextStepButton
@@ -464,9 +464,10 @@
             ramProgressBar.MarqueeAnimationSpeed = 0;
             ramProgressBar.Name = "ramProgressBar";
             ramProgressBar.Size = new Size(125, 29);
+            ramProgressBar.Style = ProgressBarStyle.Continuous;
             ramProgressBar.TabIndex = 30;
             // 
-            // Form1
+            // GuiForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -489,8 +490,9 @@
             Controls.Add(stepLabel);
             Controls.Add(start);
             Controls.Add(panel1);
-            Name = "Form1";
-            Text = "Form1";
+            DoubleBuffered = true;
+            Name = "GuiForm";
+            Text = "Симуляція комп'ютерної системи з алгоритмом планування \"HPF з квантуванням\"";
             Load += Form1_Load;
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();

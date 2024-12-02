@@ -42,14 +42,12 @@
 
         if (++quantumCounter > quantum)
         {
-            Console.WriteLine($"Quantum expired for Process {process.Id}");
             quantumCounter = 0; 
 
             if (process.WorkTime < process.BurstTime)
             {
-                process.Status = ProcessStatus.ready; // Процесс возвращается в очередь готовности
+                process.Status = ProcessStatus.ready;
                 queue.Enqueue(process, process.Priority); // Добавляем в очередь
-                Console.WriteLine($"Process {process.Id} moved to ReadyQueue.");
             }
                 else
                 {

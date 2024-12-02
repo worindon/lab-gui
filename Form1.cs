@@ -1,11 +1,11 @@
 namespace lab_gui
 {
-    public partial class Form1 : Form
+    public partial class GuiForm : Form
     {
         private Model model = new Model();
         private bool isRunning = false; // Для отслеживания состояния таймера
 
-        public Form1()
+        public GuiForm()
         {
 
             InitializeComponent();
@@ -15,6 +15,7 @@ namespace lab_gui
         {
             saveSettingsFromNumerics();
             model.SaveSettings();
+            this.Text += " (" + (((double)(timer1.Interval) / 1000).ToString()) + " с на такт)";
         }
 
         // Обработчик для обновления модели и интерфейса
@@ -45,7 +46,7 @@ namespace lab_gui
                 foreach (var process in model?.DeviceQueue)
                 {
 
-                    deviceQueueTextBox.AppendText($"Id: {process.Id} | Burst time: {process.BurstTime} | Work time: {process.WorkTime}\n");
+                    deviceQueueTextBox.AppendText(process?.ToString().Trim() + "\n");
                 }
             
             cpuActiveProcess.Text = model.cpu.ActiveProcess?.ToString().Trim();
