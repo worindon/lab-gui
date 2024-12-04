@@ -1,21 +1,24 @@
-﻿public class SystemClock
+﻿namespace lab_gui
 {
-    private long clock;
-
-
-    public long Clock
+    public class SystemClock
     {
-        get => clock;
-        private set => clock = value;
-    }
+        private long clock;
 
-    public void WorkingCycle()
-    {
-        Clock++;
-    }
 
-    public void Clear()
-    {
-        Clock = 0;
+        public long Clock
+        {
+            get => clock;
+            private set => clock = value;
+        }
+
+        public void WorkingCycle()
+        {
+            Clock++;
+        }
+
+        public void Clear()
+        {
+            Clock = 0;
+        }
     }
 }

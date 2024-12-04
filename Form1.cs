@@ -1,11 +1,14 @@
-namespace lab_gui
+using System;
+using System.Windows.Forms;
+
+namespace lab_gui 
 {
-    public partial class GuiForm : Form
+    public partial class Form1 : Form
     {
         private Model model = new Model();
-        private bool isRunning = false; // Для отслеживания состояния таймера
+        private bool isRunning = false;
 
-        public GuiForm()
+        public Form1()
         {
 
             InitializeComponent();
@@ -15,10 +18,9 @@ namespace lab_gui
         {
             saveSettingsFromNumerics();
             model.SaveSettings();
-            this.Text += " (" + (((double)(timer1.Interval) / 1000).ToString()) + " с на такт)";
+            this.Text += " (" + (((double)(formTimer.Interval) / 1000).ToString()) + " с на такт)";
         }
 
-        // Обработчик для обновления модели и интерфейса
         private void timer1_Tick(object sender, EventArgs e)
         {
             model.WorkingCycle();
@@ -29,74 +31,65 @@ namespace lab_gui
             updateProgressBar();
         }
 
-        // Обновление отображения информации о процессах
         private void UpdateProcessDisplay()
         {
-            cpuQueueTextBox.Clear(); // Очищаем текстовое поле перед обновлением
+            cpuQueueTextBox.Clear();
             deviceQueueTextBox.Clear();
-            // Перебираем все процессы в очереди ReadyQueue
+
             foreach (var item in model.ReadyQueue.UnorderedItems)
             {
                 var process = item.Element;
 
-                // Добавляем информацию о процессе в текстовое поле
                 cpuQueueTextBox.AppendText(process?.ToString().Trim() + "\n");
             }
-            
-                foreach (var process in model?.DeviceQueue)
-                {
 
-                    deviceQueueTextBox.AppendText(process?.ToString().Trim() + "\n");
-                }
-            
+            foreach (var process in model.DeviceQueue)
+            {
+
+                deviceQueueTextBox.AppendText(process?.ToString().Trim() + "\n");
+            }
+
             cpuActiveProcess.Text = model.cpu.ActiveProcess?.ToString().Trim();
             deviceActiveProcess.Text = model.device.ActiveProcess?.ToString().Trim();
             stepLabel.Text = model.clock.Clock.ToString();
         }
 
-        // Обработчик для кнопки "Start"
         private void start_Click(object sender, EventArgs e)
         {
             if (!isRunning)
             {
-                timer1.Start();
+                formTimer.Start();
                 start.Text = "Стоп";
                 isRunning = true;
             }
             else
             {
-                timer1.Stop();
+                formTimer.Stop();
                 start.Text = "Старт";
                 isRunning = false;
             }
         }
 
-        private void cpuActiveProcess_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel6_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void saveSattingsButton_Click(object sender, EventArgs e)
-        {
-            saveSettingsFromNumerics();
-        }
-
         private void saveSettingsFromNumerics()
         {
-            model.initSettings((double)this.intensitynumericUpDown.Value,
-                (int)this.minTimenumericUpDown.Value,
-                (int)this.maxTimenumericUpDown.Value,
-                (int)this.addrMinnumericUpDown.Value,
-                (int)this.addrMaxnumericUpDown.Value,
-                (int)this.ramSizenumericUpDown.Value);
-            setQuantum();
-        }
+            try
+            {
+                model.initSettings((double)this.intensitynumericUpDown.Value,
+                    (int)this.minTimenumericUpDown.Value,
+                    (int)this.maxTimenumericUpDown.Value,
+                    (int)this.addrMinnumericUpDown.Value,
+                    (int)this.addrMaxnumericUpDown.Value,
+                    (int)this.ramSizenumericUpDown.Value,
+                    (int)this.quantumNumericUpDown.Value);
 
+                setQuantum();
+
+            }
+            catch (Exception ex)
+            {
+                model.ClearResourcesAndQueues();
+            }
+        }
         private void updateRamSizeLabel()
         {
             realTimeSizeOfRamLabel.Text = (ramSizenumericUpDown.Value).ToString();
@@ -127,9 +120,9 @@ namespace lab_gui
                 {
                     --minTimenumericUpDown.Value;
                 }
-                if (quantNumericUpDown.Value >= maxTimenumericUpDown.Value)
+                if (quantumNumericUpDown.Value >= maxTimenumericUpDown.Value)
                 {
-                    quantNumericUpDown.Value = maxTimenumericUpDown.Value;
+                    quantumNumericUpDown.Value = maxTimenumericUpDown.Value;
                 }
             }
             catch { }
@@ -161,31 +154,30 @@ namespace lab_gui
 
         private void setQuantum()
         {
-            model.cpuScheduler.SetQuantum((int)quantNumericUpDown.Value);
+            model.cpuScheduler.SetQuantum((int)quantumNumericUpDown.Value);
         }
 
         private void quantNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (quantNumericUpDown.Value >= maxTimenumericUpDown.Value)
+            if (quantumNumericUpDown.Value >= maxTimenumericUpDown.Value)
             {
-                quantNumericUpDown.Value = maxTimenumericUpDown.Value;
+                quantumNumericUpDown.Value = maxTimenumericUpDown.Value;
             }
         }
 
         private void updateProgressBar()
         {
-
-            // Вычисляем процент заполненности
-            double percentage = (double)model.memoryManager.memory.OccupiedSize / (double)ramSizenumericUpDown.Value * 100;
-
-            // Ограничиваем значение в пределах от 0 до 100
+            double percentage = (double)model.memoryManager.memory.OccupiedSize / (double)model.modelSettings.ValueOfRAMSize * 100;
             ramProgressBar.Value = (int)percentage;
-
-            // Если значение недопустимо, обнуляем прогресс
-
-
         }
 
-      
+        private void saveSattingsButton_Click(object sender, EventArgs e)
+        {
+            saveSettingsFromNumerics();
+            UpdateProcessDisplay();
+            updateRamSizeLabel();
+            updateRamBusySizeLabel();
+            updateProgressBar();
+        }
     }
 }

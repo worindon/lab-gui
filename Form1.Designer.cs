@@ -1,6 +1,9 @@
-﻿namespace lab_gui
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace lab_gui
 {
-    partial class GuiForm
+    partial class Form1
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +32,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            timer1 = new System.Windows.Forms.Timer(components);
+            formTimer = new System.Windows.Forms.Timer(components);
             cpuQueueTextBox = new RichTextBox();
             start = new Button();
             stepLabel = new Label();
@@ -61,12 +64,13 @@
             label8 = new Label();
             saveSattingsButton = new Button();
             panel1 = new Panel();
+            panel2 = new Panel();
             realTimeSizeOfRamLabel = new Label();
             ramInfoLabel = new Label();
             ramSizeBusyInfoLabel = new Label();
             ramSizeBusyLabel = new Label();
             quantLabel = new Label();
-            quantNumericUpDown = new NumericUpDown();
+            quantumNumericUpDown = new NumericUpDown();
             ramProgressBar = new ProgressBar();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)intensitynumericUpDown).BeginInit();
@@ -81,13 +85,14 @@
             flowLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)addrMaxnumericUpDown).BeginInit();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)quantNumericUpDown).BeginInit();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)quantumNumericUpDown).BeginInit();
             SuspendLayout();
             // 
-            // timer1
+            // formTimer
             // 
-            timer1.Interval = 500;
-            timer1.Tick += timer1_Tick;
+            formTimer.Interval = 1;
+            formTimer.Tick += timer1_Tick;
             // 
             // cpuQueueTextBox
             // 
@@ -96,13 +101,13 @@
             cpuQueueTextBox.Location = new Point(3, 150);
             cpuQueueTextBox.Name = "cpuQueueTextBox";
             cpuQueueTextBox.ReadOnly = true;
-            cpuQueueTextBox.Size = new Size(417, 144);
+            cpuQueueTextBox.Size = new Size(447, 144);
             cpuQueueTextBox.TabIndex = 0;
             cpuQueueTextBox.Text = "";
             // 
             // start
             // 
-            start.Location = new Point(317, 497);
+            start.Location = new Point(624, 483);
             start.Name = "start";
             start.Size = new Size(94, 49);
             start.TabIndex = 2;
@@ -112,18 +117,20 @@
             // 
             // stepLabel
             // 
+            stepLabel.Anchor = AnchorStyles.None;
             stepLabel.AutoSize = true;
-            stepLabel.Font = new Font("Segoe UI", 15F);
-            stepLabel.Location = new Point(643, 492);
+            stepLabel.Font = new Font("Segoe UI", 18F);
+            stepLabel.Location = new Point(3, 1);
             stepLabel.Name = "stepLabel";
-            stepLabel.Size = new Size(28, 35);
+            stepLabel.Size = new Size(34, 41);
             stepLabel.TabIndex = 4;
             stepLabel.Text = "0";
+            stepLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // cpuTextBoxLabelConst
             // 
             cpuTextBoxLabelConst.AutoSize = true;
-            cpuTextBoxLabelConst.Location = new Point(88, 112);
+            cpuTextBoxLabelConst.Location = new Point(103, 112);
             cpuTextBoxLabelConst.Name = "cpuTextBoxLabelConst";
             cpuTextBoxLabelConst.Size = new Size(253, 20);
             cpuTextBoxLabelConst.TabIndex = 5;
@@ -133,17 +140,17 @@
             // 
             deviceQueueTextBox.BackColor = SystemColors.ControlLight;
             deviceQueueTextBox.ForeColor = SystemColors.Desktop;
-            deviceQueueTextBox.Location = new Point(447, 150);
+            deviceQueueTextBox.Location = new Point(459, 150);
             deviceQueueTextBox.Name = "deviceQueueTextBox";
             deviceQueueTextBox.ReadOnly = true;
-            deviceQueueTextBox.Size = new Size(431, 144);
+            deviceQueueTextBox.Size = new Size(447, 144);
             deviceQueueTextBox.TabIndex = 6;
             deviceQueueTextBox.Text = "";
             // 
             // deviceTextBoxLabelConst
             // 
             deviceTextBoxLabelConst.AutoSize = true;
-            deviceTextBoxLabelConst.Location = new Point(557, 112);
+            deviceTextBoxLabelConst.Location = new Point(565, 112);
             deviceTextBoxLabelConst.Name = "deviceTextBoxLabelConst";
             deviceTextBoxLabelConst.Size = new Size(239, 20);
             deviceTextBoxLabelConst.TabIndex = 7;
@@ -157,23 +164,22 @@
             cpuActiveProcess.Name = "cpuActiveProcess";
             cpuActiveProcess.ReadOnly = true;
             cpuActiveProcess.ShortcutsEnabled = false;
-            cpuActiveProcess.Size = new Size(417, 52);
+            cpuActiveProcess.Size = new Size(447, 52);
             cpuActiveProcess.TabIndex = 8;
-            cpuActiveProcess.TextChanged += cpuActiveProcess_TextChanged;
             // 
             // deviceActiveProcess
             // 
-            deviceActiveProcess.Location = new Point(447, 34);
+            deviceActiveProcess.Location = new Point(459, 34);
             deviceActiveProcess.Multiline = true;
             deviceActiveProcess.Name = "deviceActiveProcess";
             deviceActiveProcess.ReadOnly = true;
             deviceActiveProcess.ShortcutsEnabled = false;
-            deviceActiveProcess.Size = new Size(431, 52);
+            deviceActiveProcess.Size = new Size(447, 52);
             deviceActiveProcess.TabIndex = 9;
             // 
             // nextStepButton
             // 
-            nextStepButton.Location = new Point(417, 497);
+            nextStepButton.Location = new Point(724, 483);
             nextStepButton.Name = "nextStepButton";
             nextStepButton.Size = new Size(94, 49);
             nextStepButton.TabIndex = 10;
@@ -336,7 +342,6 @@
             flowLayoutPanel6.Name = "flowLayoutPanel6";
             flowLayoutPanel6.Size = new Size(176, 93);
             flowLayoutPanel6.TabIndex = 12;
-            flowLayoutPanel6.Paint += flowLayoutPanel6_Paint;
             // 
             // label6
             // 
@@ -362,7 +367,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(119, 0);
+            label7.Location = new Point(139, 0);
             label7.Name = "label7";
             label7.Size = new Size(176, 20);
             label7.TabIndex = 13;
@@ -371,7 +376,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(618, 0);
+            label8.Location = new Point(604, 0);
             label8.Name = "label8";
             label8.Size = new Size(147, 20);
             label8.TabIndex = 14;
@@ -379,7 +384,7 @@
             // 
             // saveSattingsButton
             // 
-            saveSattingsButton.Location = new Point(517, 497);
+            saveSattingsButton.Location = new Point(824, 483);
             saveSattingsButton.Name = "saveSattingsButton";
             saveSattingsButton.Size = new Size(94, 49);
             saveSattingsButton.TabIndex = 24;
@@ -399,8 +404,16 @@
             panel1.Controls.Add(cpuActiveProcess);
             panel1.Location = new Point(15, 128);
             panel1.Name = "panel1";
-            panel1.Size = new Size(881, 316);
+            panel1.Size = new Size(909, 316);
             panel1.TabIndex = 25;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(stepLabel);
+            panel2.Location = new Point(515, 483);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(103, 49);
+            panel2.TabIndex = 15;
             // 
             // realTimeSizeOfRamLabel
             // 
@@ -441,25 +454,27 @@
             // quantLabel
             // 
             quantLabel.AutoSize = true;
-            quantLabel.Location = new Point(709, 465);
+            quantLabel.Location = new Point(439, 475);
             quantLabel.Name = "quantLabel";
             quantLabel.Size = new Size(70, 20);
             quantLabel.TabIndex = 28;
             quantLabel.Text = "Quantum";
             // 
-            // quantNumericUpDown
+            // quantumNumericUpDown
             // 
-            quantNumericUpDown.Location = new Point(712, 502);
-            quantNumericUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-            quantNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            quantNumericUpDown.Name = "quantNumericUpDown";
-            quantNumericUpDown.Size = new Size(68, 27);
-            quantNumericUpDown.TabIndex = 29;
-            quantNumericUpDown.Value = new decimal(new int[] { 4, 0, 0, 0 });
-            quantNumericUpDown.ValueChanged += quantNumericUpDown_ValueChanged;
+            quantumNumericUpDown.Location = new Point(441, 500);
+            quantumNumericUpDown.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            quantumNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            quantumNumericUpDown.Name = "quantumNumericUpDown";
+            quantumNumericUpDown.Size = new Size(68, 27);
+            quantumNumericUpDown.TabIndex = 29;
+            quantumNumericUpDown.Value = new decimal(new int[] { 4, 0, 0, 0 });
+            quantumNumericUpDown.ValueChanged += quantNumericUpDown_ValueChanged;
             // 
             // ramProgressBar
             // 
+            ramProgressBar.BackColor = Color.White;
+            ramProgressBar.ForeColor = Color.White;
             ramProgressBar.Location = new Point(185, 465);
             ramProgressBar.MarqueeAnimationSpeed = 0;
             ramProgressBar.Name = "ramProgressBar";
@@ -467,13 +482,14 @@
             ramProgressBar.Style = ProgressBarStyle.Continuous;
             ramProgressBar.TabIndex = 30;
             // 
-            // GuiForm
+            // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(930, 566);
+            ClientSize = new Size(930, 587);
+            Controls.Add(panel2);
             Controls.Add(ramProgressBar);
-            Controls.Add(quantNumericUpDown);
+            Controls.Add(quantumNumericUpDown);
             Controls.Add(quantLabel);
             Controls.Add(ramSizeBusyLabel);
             Controls.Add(ramSizeBusyInfoLabel);
@@ -487,11 +503,10 @@
             Controls.Add(flowLayoutPanel2);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(nextStepButton);
-            Controls.Add(stepLabel);
             Controls.Add(start);
             Controls.Add(panel1);
             DoubleBuffered = true;
-            Name = "GuiForm";
+            Name = "Form1";
             Text = "Симуляція комп'ютерної системи з алгоритмом планування \"HPF з квантуванням\"";
             Load += Form1_Load;
             flowLayoutPanel1.ResumeLayout(false);
@@ -514,14 +529,16 @@
             ((System.ComponentModel.ISupportInitialize)addrMaxnumericUpDown).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)quantNumericUpDown).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)quantumNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer formTimer;
         private RichTextBox cpuQueueTextBox;
         private Button start;
         private Label stepLabel;
@@ -558,7 +575,8 @@
         private Label ramSizeBusyInfoLabel;
         private Label ramSizeBusyLabel;
         private Label quantLabel;
-        private NumericUpDown quantNumericUpDown;
+        private NumericUpDown quantumNumericUpDown;
         private ProgressBar ramProgressBar;
+        private Panel panel2;
     }
 }

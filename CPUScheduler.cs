@@ -1,67 +1,66 @@
-﻿public class CPUScheduler
+﻿
+namespace lab_gui
 {
-    private Resource resource;
-    private PriorityQueue<Process, long> queue;
-    private int quantum;
-    private int quantumCounter;
-
-    public void SetQuantum(int quantum)
+    public class CPUScheduler
     {
-        if(quantum > 0 && quantum <= 10)
+        private Resource resource;
+        private PriorityQueue<Process, long> queue;
+        private int quantum;
+        private int quantumCounter;
+
+        public void SetQuantum(int quantum)
         {
-            this.quantum = quantum;
-        }
-    }
-
-    public CPUScheduler(Resource resource, PriorityQueue<Process, long> queue, int quantum)
-    {
-        this.resource = resource;
-        this.queue = queue;
-        this.quantum = quantum;
-        this.quantumCounter = 0;
-    }
-
-    public void Session()
-    {
-        if (resource.IsFree() && queue.Count > 0)
-        {
-            var process = queue.Dequeue();
-            process.Status = ProcessStatus.running;
-            resource.ActiveProcess = process;
-            quantumCounter = 0;
-        }
-    }
-
-   public void Execute()
-{
-    if (resource.ActiveProcess != null)
-    {
-         
-        var process = resource.ActiveProcess;
-
-
-        if (++quantumCounter > quantum)
-        {
-            quantumCounter = 0; 
-
-            if (process.WorkTime < process.BurstTime)
+            if (quantum > 0)
             {
-                process.Status = ProcessStatus.ready;
-                queue.Enqueue(process, process.Priority); // Добавляем в очередь
+                this.quantum = quantum;
             }
-                else
+        }
+
+        public CPUScheduler(Resource resource, PriorityQueue<Process, long> queue, int quantum)
+        {
+            this.resource = resource;
+            this.queue = queue;
+            this.quantum = quantum;
+            this.quantumCounter = 0;
+        }
+
+        public void Session()
+        {
+            if (resource.IsFree() && queue.Count > 0)
+            {
+                var process = queue.Dequeue();
+                process.Status = ProcessStatus.running;
+                resource.ActiveProcess = process;
+                quantumCounter = 0;
+            }
+        }
+
+        public void Execute()
+        {
+            if (resource.ActiveProcess != null)
+            {
+
+                var process = resource.ActiveProcess;
+
+                if (++quantumCounter > quantum)
                 {
-                    process.Status = process.randStatus();
-                    process.OnResourceFreeing();
-                    Console.WriteLine($"Process {process.Id} terminated.");
+                    quantumCounter = 0;
+
+                    if (process.WorkTime < process.BurstTime)
+                    {
+                        process.Status = ProcessStatus.ready;
+                        queue.Enqueue(process, process.Priority);
+                                                
+                    }
+                    else
+                    {
+                        process.Status = process.randStatus();
+                        process.OnResourceFreeing();
+                    }
+
+                    resource.Clear();
                 }
-
-                resource.Clear();
-
+            }
         }
     }
-}
-
-
-
 }

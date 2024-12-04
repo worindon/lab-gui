@@ -1,3 +1,5 @@
+
+
 namespace lab_gui
 {
     internal static class Program
@@ -11,7 +13,7 @@ namespace lab_gui
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new GuiForm());
+            Application.Run(new Form1());
         }
     }
 }

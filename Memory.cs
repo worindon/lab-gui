@@ -1,16 +1,19 @@
-﻿public class Memory
+﻿namespace lab_gui
 {
-    public long OccupiedSize { get;  set; }
-    public long FreeSize { get;  set; }
-
-    public void Save(long size)
+    public class Memory
     {
-        FreeSize = size;
-        OccupiedSize = 0;
-    }
+        public long OccupiedSize { get; set; }
+        public long FreeSize { get; set; }
 
-    public void Clear()
-    {
-        OccupiedSize = 0;
+        public void Save(long size)
+        {
+            FreeSize = size;
+            OccupiedSize = 0;
+        }
+
+        public void Clear()
+        {
+            OccupiedSize = 0;
+        }
     }
 }

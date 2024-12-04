@@ -10,31 +10,46 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="obj\Debug\net8.0-windows\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" />
-    <Compile Include="obj\Debug\net8.0-windows\lab gui.AssemblyInfo.cs" />
-    <Compile Include="obj\Debug\net8.0-windows\lab gui.GlobalUsings.g.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Content Include="bin\Debug\net8.0-windows\lab gui.deps.json" />
+    <Content Include="bin\Debug\net8.0-windows\lab gui.runtimeconfig.json" />
+    <Content Include="obj\Debug\net8.0-windows\lab gui.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\net8.0-windows\lab gui.designer.deps.json" />
     <Content Include="obj\Debug\net8.0-windows\lab gui.designer.runtimeconfig.json" />
+    <Content Include="obj\Debug\net8.0-windows\lab gui.sourcelink.json" />
     <Content Include="obj\lab gui.csproj.nuget.dgspec.json" />
     <Content Include="obj\project.assets.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="bin\Debug\net8.0-windows\" />
-    <Folder Include="obj\Debug\net8.0-windows\refint\" />
-    <Folder Include="obj\Debug\net8.0-windows\ref\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Include="bin\Debug\net8.0-windows\lab gui.dll" />
+    <None Include="bin\Debug\net8.0-windows\lab gui.exe" />
+    <None Include="bin\Debug\net8.0-windows\lab gui.pdb" />
+    <None Include="lab gui.sln" />
+    <None Include="obj\Debug\net8.0-windows\apphost.exe" />
     <None Include="obj\Debug\net8.0-windows\lab gui.AssemblyInfoInputs.cache" />
     <None Include="obj\Debug\net8.0-windows\lab gui.assets.cache" />
+    <None Include="obj\Debug\net8.0-windows\lab gui.csproj.BuildWithSkipAnalyzers" />
+    <None Include="obj\Debug\net8.0-windows\lab gui.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\net8.0-windows\lab gui.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\net8.0-windows\lab gui.dll" />
     <None Include="obj\Debug\net8.0-windows\lab gui.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Debug\net8.0-windows\lab gui.genruntimeconfig.cache" />
+    <None Include="obj\Debug\net8.0-windows\lab gui.pdb" />
+    <None Include="obj\Debug\net8.0-windows\lab_gui.Form1.resources" />
+    <None Include="obj\Debug\net8.0-windows\refint\lab gui.dll" />
+    <None Include="obj\Debug\net8.0-windows\ref\lab gui.dll" />
     <None Include="obj\lab gui.csproj.nuget.g.props" />
     <None Include="obj\lab gui.csproj.nuget.g.targets" />
     <None Include="obj\project.nuget.cache" />
+    <None Include="obj\Release\net8.0-windows\lab gui.AssemblyInfoInputs.cache" />
+    <None Include="obj\Release\net8.0-windows\lab gui.assets.cache" />
+    <None Include="obj\Release\net8.0-windows\lab gui.GeneratedMSBuildEditorConfig.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Release\net8.0-windows\" />
+    <Folder Include="obj\Release\net8.0-windows\refint\" />
+    <Folder Include="obj\Release\net8.0-windows\ref\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿
+﻿namespace lab_gui
+{
     public class Resource
     {
         private Process activeProcess = null;
@@ -8,7 +9,7 @@
             get => activeProcess;
             set => activeProcess = value;
         }
-    
+
         public void WorkingCycle()
         {
             activeProcess?.IncreaseWorkTime();
@@ -23,6 +24,8 @@
 
         public override string ToString()
         {
-            return activeProcess?.ToString();
+            return activeProcess.ToString();
         }
     }
+}
+

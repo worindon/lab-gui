@@ -1,17 +1,22 @@
-﻿public class IdGenerator
+﻿namespace lab_gui
 {
-    private long id;
-
-    public long Id
+    public class IdGenerator
     {
-        get
+        private long id;
+
+        public long Id
         {
-            return id == long.MaxValue ? 0 : ++id;
+            get
+            {
+                return id == long.MaxValue ? 0 : ++id;
+            }
+        }
+
+        public void Clear()
+        {
+            id = 0;
         }
     }
-
-    public void Clear()
-    {
-        id = 0;
-    }
 }
+
+
