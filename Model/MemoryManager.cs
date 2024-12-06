@@ -1,4 +1,4 @@
-﻿namespace lab_gui
+﻿namespace lab_gui.model
 {
     public class MemoryManager
     {

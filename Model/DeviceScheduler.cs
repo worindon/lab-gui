@@ -1,4 +1,4 @@
-﻿namespace lab_gui
+﻿namespace lab_gui.model
 {
     public class DeviceScheduler
     {
@@ -8,7 +8,7 @@
         public DeviceScheduler(Resource resource, Queue<Process> Queue)
         {
             this.resource = resource;
-            this.queue = Queue;
+            queue = Queue;
         }
 
         public void Session()
@@ -20,7 +20,7 @@
                 {
                     resource.ActiveProcess?.IncreaseWorkTime();
                 }
-                else 
+                else
                 {
 
                     resource.ActiveProcess.Status = ProcessStatus.terminated;
@@ -28,7 +28,8 @@
                 }
 
             }
-            else if (queue.Count != 0)
+
+            if (queue.Count != 0 && resource.IsFree())
             {
                 var process = queue.Dequeue();
                 if (resource.ActiveProcess != process)

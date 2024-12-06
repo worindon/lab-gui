@@ -1,29 +1,24 @@
-﻿
-
-namespace lab_gui
+﻿namespace lab_gui.model
 {
     public enum ProcessStatus { ready, running, waiting, terminated }
 
     public class Process
     {
         public event EventHandler FreeingAResource;
-        public long Id {  get;  private set; }
-        public string Name { get; set; }
+        public long Id { get; private set; }
+        public string Name { get; private set; }
         public long BurstTime { get; set; }
         public ProcessStatus Status { get; set; }
         public long WorkTime { get; private set; }
-        public long AddrSpace { get; set; }
-
-
-
+        public long AddrSpace { get; private set; }
         private static Random procRand = new Random();
         public int Priority;
 
         public Process(long id, long addrSpace)
         {
-            this.Id = id;
+            Id = id;
             if (addrSpace > 0)
-                this.AddrSpace = addrSpace;
+                AddrSpace = addrSpace;
             Name = "P" + id;
             Status = ProcessStatus.ready;
         }
@@ -55,12 +50,12 @@ namespace lab_gui
 
         public override string ToString()
         {
-            return "Id: " + this.Id + " " +
-                   "[" + this.Status + "]" +
-                   " Pririty [" + this.Priority + "]" +
-                   " AddrsSpace" + " [" + this.AddrSpace + "]" +
-                   " Work time " + "[" + this.WorkTime + 
-                   "/" + this.BurstTime + "]";
+            return "Id: " + Id + " " +
+                   "[" + Status + "]" +
+                   " Priority [" + Priority + "]" +
+                   " AddrsSpace" + " [" + AddrSpace + "]" +
+                   " Work time " + "[" + WorkTime +
+                   "/" + BurstTime + "]";
         }
 
         public ProcessStatus randStatus()

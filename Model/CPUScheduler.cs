@@ -1,5 +1,4 @@
-﻿
-namespace lab_gui
+﻿namespace lab_gui.model
 {
     public class CPUScheduler
     {
@@ -21,7 +20,7 @@ namespace lab_gui
             this.resource = resource;
             this.queue = queue;
             this.quantum = quantum;
-            this.quantumCounter = 0;
+            quantumCounter = 0;
         }
 
         public void Session()
@@ -33,6 +32,7 @@ namespace lab_gui
                 resource.ActiveProcess = process;
                 quantumCounter = 0;
             }
+
         }
 
         public void Execute()
@@ -42,7 +42,7 @@ namespace lab_gui
 
                 var process = resource.ActiveProcess;
 
-                if (++quantumCounter > quantum)
+                if (++quantumCounter >= quantum)
                 {
                     quantumCounter = 0;
 
@@ -50,12 +50,13 @@ namespace lab_gui
                     {
                         process.Status = ProcessStatus.ready;
                         queue.Enqueue(process, process.Priority);
-                                                
+
                     }
                     else
                     {
                         process.Status = process.randStatus();
                         process.OnResourceFreeing();
+
                     }
 
                     resource.Clear();

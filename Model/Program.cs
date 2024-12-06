@@ -1,6 +1,4 @@
-
-
-namespace lab_gui
+namespace lab_gui.model
 {
     internal static class Program
     {

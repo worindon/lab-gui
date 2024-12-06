@@ -1,6 +1,8 @@
-﻿namespace lab_gui
+﻿
+
+namespace lab_gui.model
 {
-    public class Model
+    public class Model  
     {
         public SystemClock clock { get; private set; }
         public Resource cpu { get; private set; }
@@ -25,7 +27,7 @@
             ram = new Memory();
             idGen = new IdGenerator();
             ReadyQueue = new PriorityQueue<Process, long>();
-            DeviceQueue = new Queue<Process>();            
+            DeviceQueue = new Queue<Process>();
             memoryManager = new MemoryManager();
             deviceScheduler = new DeviceScheduler(device, DeviceQueue);
             processRand = new Random();
@@ -43,16 +45,24 @@
         public void WorkingCycle()
         {
             clock.WorkingCycle();
-            cpuScheduler.Session();
-            cpuScheduler.Execute();
-            cpu.WorkingCycle();
-            deviceScheduler.Session();
+
+
 
             if (ShouldCreateProcess())
             {
                 CreateProcess();
             }
 
+
+            
+            
+            cpu.WorkingCycle();
+
+
+            cpuScheduler.Execute();            
+            cpuScheduler.Session();
+            
+            deviceScheduler.Session();
         }
 
         private bool ShouldCreateProcess()
@@ -82,7 +92,6 @@
             ram.Clear();
             ReadyQueue.Clear();
             DeviceQueue.Clear();
-            idGen.Clear();
             clock.Clear();
             idGen.Clear();
         }
@@ -95,7 +104,7 @@
             device.Clear();
         }
 
-        private void freeingResourceEventHandler(object obj, EventArgs e)
+        private void FreeingResourceEventHandler(object obj, EventArgs e)
         {
             Process proc = obj as Process;
             if (proc == null)
@@ -140,7 +149,7 @@
                     {
                         device.Clear();
                     }
-                    break;                
+                    break;
             }
         }
 
@@ -148,13 +157,13 @@
         {
             if (proc != null)
             {
-                proc.FreeingAResource += freeingResourceEventHandler;
+                proc.FreeingAResource += FreeingResourceEventHandler;
             }
         }
 
         public void Unsubscribe(Process proc)
         {
-            proc.FreeingAResource -= freeingResourceEventHandler;
+            proc.FreeingAResource -= FreeingResourceEventHandler;
         }
 
         public void initSettings(double intensity, int burstMin, int burstMax, int addrSpaceMin, int addrSpaceMax, int ramSize, int quantum)
@@ -166,7 +175,7 @@
             modelSettings.MaxValueOfAddrSpace = addrSpaceMax;
             modelSettings.ValueOfRAMSize = ramSize;
             modelSettings.ValueOfQuantum = quantum;
-            SaveSettings();  
+            SaveSettings();
             ClearAll();
         }
     }

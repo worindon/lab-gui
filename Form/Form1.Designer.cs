@@ -91,7 +91,7 @@ namespace lab_gui
             // 
             // formTimer
             // 
-            formTimer.Interval = 1;
+            formTimer.Interval = 700;
             formTimer.Tick += timer1_Tick;
             // 
             // cpuQueueTextBox
@@ -468,7 +468,7 @@ namespace lab_gui
             quantumNumericUpDown.Name = "quantumNumericUpDown";
             quantumNumericUpDown.Size = new Size(68, 27);
             quantumNumericUpDown.TabIndex = 29;
-            quantumNumericUpDown.Value = new decimal(new int[] { 4, 0, 0, 0 });
+            quantumNumericUpDown.Value = new decimal(new int[] { 2, 0, 0, 0 });
             quantumNumericUpDown.ValueChanged += quantNumericUpDown_ValueChanged;
             // 
             // ramProgressBar

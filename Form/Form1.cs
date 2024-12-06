@@ -1,7 +1,9 @@
+using lab_gui.model;
 using System;
 using System.Windows.Forms;
 
-namespace lab_gui 
+
+namespace lab_gui
 {
     public partial class Form1 : Form
     {
@@ -25,13 +27,13 @@ namespace lab_gui
         {
             model.WorkingCycle();
 
-            UpdateProcessDisplay();
+            updateProcessDisplay();
             updateRamSizeLabel();
-            updateRamBusySizeLabel();
+            updateRamOcupuedSizeLabel();
             updateProgressBar();
         }
 
-        private void UpdateProcessDisplay()
+        private void updateProcessDisplay()
         {
             cpuQueueTextBox.Clear();
             deviceQueueTextBox.Clear();
@@ -40,17 +42,20 @@ namespace lab_gui
             {
                 var process = item.Element;
 
-                cpuQueueTextBox.AppendText(process?.ToString().Trim() + "\n");
+                cpuQueueTextBox.AppendText(process?.ToString() + "\n");
             }
 
             foreach (var process in model.DeviceQueue)
             {
 
-                deviceQueueTextBox.AppendText(process?.ToString().Trim() + "\n");
+                deviceQueueTextBox.AppendText(process?.ToString() + "\n");
             }
 
-            cpuActiveProcess.Text = model.cpu.ActiveProcess?.ToString().Trim();
-            deviceActiveProcess.Text = model.device.ActiveProcess?.ToString().Trim();
+            string forReplace = $"Priority [{model.device.ActiveProcess?.Priority}] ";
+            deviceActiveProcess.Text = model.device.ActiveProcess?.ToString().Replace(forReplace, "");
+
+            cpuActiveProcess.Text = model.cpu.ActiveProcess?.ToString();
+
             stepLabel.Text = model.clock.Clock.ToString();
         }
 
@@ -90,12 +95,13 @@ namespace lab_gui
                 model.ClearResourcesAndQueues();
             }
         }
+
         private void updateRamSizeLabel()
         {
             realTimeSizeOfRamLabel.Text = (ramSizenumericUpDown.Value).ToString();
         }
 
-        private void updateRamBusySizeLabel()
+        private void updateRamOcupuedSizeLabel()
         {
             ramSizeBusyLabel.Text = model.memoryManager.memory.OccupiedSize.ToString();
         }
@@ -174,9 +180,9 @@ namespace lab_gui
         private void saveSattingsButton_Click(object sender, EventArgs e)
         {
             saveSettingsFromNumerics();
-            UpdateProcessDisplay();
+            updateProcessDisplay();
             updateRamSizeLabel();
-            updateRamBusySizeLabel();
+            updateRamOcupuedSizeLabel();
             updateProgressBar();
         }
     }
