@@ -4,11 +4,7 @@
     {
         public Memory memory { get; private set; }
 
-
-        public void Save(Memory memory)
-        {
-            this.memory = memory;
-        }
+        public void Save(Memory memory) => this.memory = memory;
 
         public Memory Allocate(Process process)
         {
@@ -18,6 +14,7 @@
                 memory.FreeSize -= process.AddrSpace;
                 return memory;
             }
+
             return null;
         }
 

@@ -11,9 +11,6 @@
             OccupiedSize = 0;
         }
 
-        public void Clear()
-        {
-            OccupiedSize = 0;
-        }
+        public void Clear() => OccupiedSize = 0;
     }
 }

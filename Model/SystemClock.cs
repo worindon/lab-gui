@@ -2,8 +2,7 @@
 {
     public class SystemClock
     {
-        private long clock;
-
+        long clock;
 
         public long Clock
         {
@@ -11,14 +10,8 @@
             private set => clock = value;
         }
 
-        public void WorkingCycle()
-        {
-            Clock++;
-        }
+        public void WorkingCycle() => Clock++;
 
-        public void Clear()
-        {
-            Clock = 0;
-        }
+        public void Clear() => Clock = 0;
     }
 }

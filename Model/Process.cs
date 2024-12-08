@@ -11,19 +11,19 @@
         public ProcessStatus Status { get; set; }
         public long WorkTime { get; private set; }
         public long AddrSpace { get; private set; }
-        private static Random procRand = new Random();
+        static Random procRand = new Random();
         public int Priority;
 
         public Process(long id, long addrSpace)
         {
             Id = id;
+
             if (addrSpace > 0)
                 AddrSpace = addrSpace;
+
             Name = "P" + id;
             Status = ProcessStatus.ready;
         }
-
-
 
         public void IncreaseWorkTime()
         {
@@ -39,14 +39,12 @@
                 {
                     Status = randStatus();
                 }
+
                 OnResourceFreeing();
             }
+        }
 
-        }
-        public void ResetWorkTime()
-        {
-            WorkTime = 0;
-        }
+        public void ResetWorkTime() => WorkTime = 0;
 
         public override string ToString()
         {
@@ -68,6 +66,5 @@
             if (FreeingAResource != null)
                 FreeingAResource(this, null);
         }
-
     }
 }

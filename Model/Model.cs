@@ -1,8 +1,6 @@
-﻿
-
-namespace lab_gui.model
+﻿namespace lab_gui.model
 {
-    public class Model  
+    public class Model
     {
         public SystemClock clock { get; private set; }
         public Resource cpu { get; private set; }
@@ -16,8 +14,6 @@ namespace lab_gui.model
         public DeviceScheduler deviceScheduler { get; private set; }
         public Random processRand { get; private set; }
         public Settings modelSettings { get; private set; }
-
-
 
         public Model()
         {
@@ -35,7 +31,6 @@ namespace lab_gui.model
             cpuScheduler = new CPUScheduler(cpu, ReadyQueue, modelSettings.ValueOfQuantum);
         }
 
-
         public void SaveSettings()
         {
             ram.Save(modelSettings.ValueOfRAMSize);
@@ -46,33 +41,24 @@ namespace lab_gui.model
         {
             clock.WorkingCycle();
 
-
-
             if (ShouldCreateProcess())
             {
                 CreateProcess();
             }
 
-
-            
-            
             cpu.WorkingCycle();
 
-
-            cpuScheduler.Execute();            
+            cpuScheduler.Execute();
             cpuScheduler.Session();
-            
+
             deviceScheduler.Session();
         }
 
-        private bool ShouldCreateProcess()
-        {
-            return processRand.NextDouble() < modelSettings.Intensity;
-        }
+        bool ShouldCreateProcess() => processRand.NextDouble() < modelSettings.Intensity;
 
-        private void CreateProcess()
+        void CreateProcess()
         {
-            Process proc = new Process(idGen.Id, processRand.Next(modelSettings.MinValueOfAddrSpace, modelSettings.MaxValueOfAddrSpace + 1))
+            var proc = new Process(idGen.Id, processRand.Next(modelSettings.MinValueOfAddrSpace, modelSettings.MaxValueOfAddrSpace + 1))
             {
                 BurstTime = processRand.Next(modelSettings.MinValueOfBurstTime, modelSettings.MaxValueOfBurstTime + 1),
                 Priority = processRand.Next(modelSettings.MinValueOfBurstTime, modelSettings.MaxValueOfBurstTime + 1)
@@ -104,9 +90,10 @@ namespace lab_gui.model
             device.Clear();
         }
 
-        private void FreeingResourceEventHandler(object obj, EventArgs e)
+        void FreeingResourceEventHandler(object obj, EventArgs e)
         {
-            Process proc = obj as Process;
+            var proc = obj as Process;
+
             if (proc == null)
                 return;
 
@@ -136,6 +123,7 @@ namespace lab_gui.model
                         proc.Status = ProcessStatus.ready;
                         DeviceQueue.Enqueue(proc);
                     }
+
                     Subscribe(proc);
                     break;
 
@@ -145,10 +133,12 @@ namespace lab_gui.model
                         memoryManager.Free(proc);
                         cpu.Clear();
                     }
+
                     if (proc == device.ActiveProcess)
                     {
                         device.Clear();
                     }
+
                     break;
             }
         }
@@ -161,10 +151,7 @@ namespace lab_gui.model
             }
         }
 
-        public void Unsubscribe(Process proc)
-        {
-            proc.FreeingAResource -= FreeingResourceEventHandler;
-        }
+        public void Unsubscribe(Process proc) => proc.FreeingAResource -= FreeingResourceEventHandler;
 
         public void initSettings(double intensity, int burstMin, int burstMax, int addrSpaceMin, int addrSpaceMax, int ramSize, int quantum)
         {

@@ -2,7 +2,7 @@
 {
     public class Resource
     {
-        private Process activeProcess = null;
+        Process activeProcess;
 
         public Process ActiveProcess
         {
@@ -10,22 +10,13 @@
             set => activeProcess = value;
         }
 
-        public void WorkingCycle()
-        {
-            activeProcess?.IncreaseWorkTime();
-        }
+        public void WorkingCycle() => activeProcess?.IncreaseWorkTime();
 
         public bool IsFree() => activeProcess == null;
 
-        public void Clear()
-        {
-            activeProcess = null;
-        }
+        public void Clear() => activeProcess = null;
 
-        public override string ToString()
-        {
-            return activeProcess.ToString();
-        }
+        public override string ToString() => activeProcess.ToString();
     }
 }
 

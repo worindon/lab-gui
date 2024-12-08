@@ -2,28 +2,22 @@ using lab_gui.model;
 using System;
 using System.Windows.Forms;
 
-
 namespace lab_gui
 {
     public partial class Form1 : Form
     {
-        private Model model = new Model();
-        private bool isRunning = false;
+        Model model = new Model();
+        bool isRunning;
 
-        public Form1()
-        {
-
-            InitializeComponent();
-
-        }
-        private void Form1_Load(object sender, EventArgs e)
+        public Form1() => InitializeComponent();
+        void Form1_Load(object sender, EventArgs e)
         {
             saveSettingsFromNumerics();
             model.SaveSettings();
-            this.Text += " (" + (((double)(formTimer.Interval) / 1000).ToString()) + " ñ íà òàêò)";
+            Text += " (" + (((double)(formTimer.Interval) / 1000).ToString()) + " Ñ Ð½Ð° Ñ‚Ð°ÐºÑ‚)";
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        void timer1_Tick(object sender, EventArgs e)
         {
             model.WorkingCycle();
 
@@ -33,7 +27,7 @@ namespace lab_gui
             updateProgressBar();
         }
 
-        private void updateProcessDisplay()
+        void updateProcessDisplay()
         {
             cpuQueueTextBox.Clear();
             deviceQueueTextBox.Clear();
@@ -46,12 +40,11 @@ namespace lab_gui
             }
 
             foreach (var process in model.DeviceQueue)
-            {
 
                 deviceQueueTextBox.AppendText(process?.ToString() + "\n");
-            }
+            
 
-            string forReplace = $"Priority [{model.device.ActiveProcess?.Priority}] ";
+            var forReplace = $"Priority [{model.device.ActiveProcess?.Priority}] ";
             deviceActiveProcess.Text = model.device.ActiveProcess?.ToString().Replace(forReplace, "");
 
             cpuActiveProcess.Text = model.cpu.ActiveProcess?.ToString();
@@ -59,36 +52,35 @@ namespace lab_gui
             stepLabel.Text = model.clock.Clock.ToString();
         }
 
-        private void start_Click(object sender, EventArgs e)
+        void start_Click(object sender, EventArgs e)
         {
             if (!isRunning)
             {
                 formTimer.Start();
-                start.Text = "Ñòîï";
+                start.Text = "Ð¡Ñ‚Ð¾Ð¿";
                 isRunning = true;
             }
             else
             {
                 formTimer.Stop();
-                start.Text = "Ñòàðò";
+                start.Text = "Ð¡Ñ‚Ð°Ñ€Ñ‚";
                 isRunning = false;
             }
         }
 
-        private void saveSettingsFromNumerics()
+        void saveSettingsFromNumerics()
         {
             try
             {
-                model.initSettings((double)this.intensitynumericUpDown.Value,
-                    (int)this.minTimenumericUpDown.Value,
-                    (int)this.maxTimenumericUpDown.Value,
-                    (int)this.addrMinnumericUpDown.Value,
-                    (int)this.addrMaxnumericUpDown.Value,
-                    (int)this.ramSizenumericUpDown.Value,
-                    (int)this.quantumNumericUpDown.Value);
+                model.initSettings((double)intensitynumericUpDown.Value,
+                    (int)minTimenumericUpDown.Value,
+                    (int)maxTimenumericUpDown.Value,
+                    (int)addrMinnumericUpDown.Value,
+                    (int)addrMaxnumericUpDown.Value,
+                    (int)ramSizenumericUpDown.Value,
+                    (int)quantumNumericUpDown.Value);
 
                 setQuantum();
-
             }
             catch (Exception ex)
             {
@@ -96,17 +88,17 @@ namespace lab_gui
             }
         }
 
-        private void updateRamSizeLabel()
+        void updateRamSizeLabel()
         {
             realTimeSizeOfRamLabel.Text = (ramSizenumericUpDown.Value).ToString();
         }
 
-        private void updateRamOcupuedSizeLabel()
+        void updateRamOcupuedSizeLabel()
         {
             ramSizeBusyLabel.Text = model.memoryManager.memory.OccupiedSize.ToString();
         }
 
-        private void minTimenumericUpDown_ValueChanged(object sender, EventArgs e)
+        void minTimenumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             try
             {
@@ -118,7 +110,7 @@ namespace lab_gui
             catch { }
         }
 
-        private void maxTimenumericUpDown_ValueChanged(object sender, EventArgs e)
+        void maxTimenumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             try
             {
@@ -126,6 +118,7 @@ namespace lab_gui
                 {
                     --minTimenumericUpDown.Value;
                 }
+
                 if (quantumNumericUpDown.Value >= maxTimenumericUpDown.Value)
                 {
                     quantumNumericUpDown.Value = maxTimenumericUpDown.Value;
@@ -134,7 +127,7 @@ namespace lab_gui
             catch { }
         }
 
-        private void addrMinnumericUpDown_ValueChanged(object sender, EventArgs e)
+        void addrMinnumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             try
             {
@@ -146,7 +139,7 @@ namespace lab_gui
             catch { }
         }
 
-        private void addrMaxnumericUpDown_ValueChanged(object sender, EventArgs e)
+        void addrMaxnumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             try
             {
@@ -158,26 +151,25 @@ namespace lab_gui
             catch { }
         }
 
-        private void setQuantum()
-        {
-            model.cpuScheduler.SetQuantum((int)quantumNumericUpDown.Value);
-        }
+        void setQuantum() => model.cpuScheduler.SetQuantum((int)quantumNumericUpDown.Value);
 
-        private void quantNumericUpDown_ValueChanged(object sender, EventArgs e)
+        void quantNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (quantumNumericUpDown.Value >= maxTimenumericUpDown.Value)
             {
                 quantumNumericUpDown.Value = maxTimenumericUpDown.Value;
             }
+
+            setQuantum();
         }
 
-        private void updateProgressBar()
+        void updateProgressBar()
         {
-            double percentage = (double)model.memoryManager.memory.OccupiedSize / (double)model.modelSettings.ValueOfRAMSize * 100;
+            var percentage = (double)model.memoryManager.memory.OccupiedSize / (double)model.modelSettings.ValueOfRAMSize * 100;
             ramProgressBar.Value = (int)percentage;
         }
 
-        private void saveSattingsButton_Click(object sender, EventArgs e)
+        void saveSattingsButton_Click(object sender, EventArgs e)
         {
             saveSettingsFromNumerics();
             updateProcessDisplay();
