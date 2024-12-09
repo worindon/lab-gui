@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace lab_gui
 {
-    partial class Form1
+    partial class Gui
     {
         /// <summary>
         ///  Required designer variable.
@@ -482,7 +482,7 @@ namespace lab_gui
             ramProgressBar.Style = ProgressBarStyle.Continuous;
             ramProgressBar.TabIndex = 30;
             // 
-            // Form1
+            // Gui
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -506,7 +506,7 @@ namespace lab_gui
             Controls.Add(start);
             Controls.Add(panel1);
             DoubleBuffered = true;
-            Name = "Form1";
+            Name = "Gui";
             Text = "Симуляція комп'ютерної системи з алгоритмом планування \"HPF з квантуванням\"";
             Load += Form1_Load;
             flowLayoutPanel1.ResumeLayout(false);

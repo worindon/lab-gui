@@ -4,12 +4,13 @@ using System.Windows.Forms;
 
 namespace lab_gui
 {
-    public partial class Form1 : Form
+    public partial class Gui : Form
     {
         Model model = new Model();
         bool isRunning;
 
-        public Form1() => InitializeComponent();
+        public Gui() => InitializeComponent();
+
         void Form1_Load(object sender, EventArgs e)
         {
             saveSettingsFromNumerics();
@@ -42,7 +43,6 @@ namespace lab_gui
             foreach (var process in model.DeviceQueue)
 
                 deviceQueueTextBox.AppendText(process?.ToString() + "\n");
-            
 
             var forReplace = $"Priority [{model.device.ActiveProcess?.Priority}] ";
             deviceActiveProcess.Text = model.device.ActiveProcess?.ToString().Replace(forReplace, "");
@@ -70,22 +70,15 @@ namespace lab_gui
 
         void saveSettingsFromNumerics()
         {
-            try
-            {
-                model.initSettings((double)intensitynumericUpDown.Value,
-                    (int)minTimenumericUpDown.Value,
-                    (int)maxTimenumericUpDown.Value,
-                    (int)addrMinnumericUpDown.Value,
-                    (int)addrMaxnumericUpDown.Value,
-                    (int)ramSizenumericUpDown.Value,
-                    (int)quantumNumericUpDown.Value);
+            model.initSettings((double)intensitynumericUpDown.Value,
+                (int)minTimenumericUpDown.Value,
+                (int)maxTimenumericUpDown.Value,
+                (int)addrMinnumericUpDown.Value,
+                (int)addrMaxnumericUpDown.Value,
+                (int)ramSizenumericUpDown.Value,
+                (int)quantumNumericUpDown.Value);
 
-                setQuantum();
-            }
-            catch (Exception ex)
-            {
-                model.ClearResourcesAndQueues();
-            }
+            setQuantum();
         }
 
         void updateRamSizeLabel()

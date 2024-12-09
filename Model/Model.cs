@@ -82,14 +82,7 @@
             idGen.Clear();
         }
 
-        public void ClearResourcesAndQueues()
-        {
-            ReadyQueue.Clear();
-            DeviceQueue.Clear();
-            cpu.Clear();
-            device.Clear();
-        }
-
+      
         void FreeingResourceEventHandler(object obj, EventArgs e)
         {
             var proc = obj as Process;
@@ -153,7 +146,13 @@
 
         public void Unsubscribe(Process proc) => proc.FreeingAResource -= FreeingResourceEventHandler;
 
-        public void initSettings(double intensity, int burstMin, int burstMax, int addrSpaceMin, int addrSpaceMax, int ramSize, int quantum)
+        public void initSettings(double intensity,
+                                 int burstMin,
+                                 int burstMax,
+                                 int addrSpaceMin,
+                                 int addrSpaceMax,
+                                 int ramSize,
+                                 int quantum)
         {
             modelSettings.Intensity = intensity;
             modelSettings.MinValueOfBurstTime = burstMin;
